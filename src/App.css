@@ -36,3 +36,15 @@
     transform: rotate(360deg);
   }
 }
+
+
+.container {
+  /*padding: 20px;*/
+}
+
+.bar {
+  fill: #720570;
+  width: 50px;
+  height: 20px;
+}
+
