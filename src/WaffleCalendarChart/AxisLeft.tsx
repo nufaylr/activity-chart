@@ -1,13 +1,13 @@
 import {FunctionComponent, useMemo} from "react"
-import yScale from "./yScale";
+import {yScale} from "./yScale";
 import {width} from "./settings";
 
-const formatScale = (date: any) => `${date}:00`
+const formatScale = (date: string) => `${date}:00`
 
 const AxisLeft: FunctionComponent = () => {
 
     const axisLeftTicks = useMemo(() => {
-        return yScale.domain().map((value: any) => (
+        return yScale.domain().map((value: string) => (
             {value, yOffset: yScale(value)}))
     },[])
 

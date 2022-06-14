@@ -1,21 +1,20 @@
 import {FunctionComponent, useMemo} from "react"
 import {height, margin} from "./settings"
-import {getDaysArray} from "./mockData";
 import xScale from "./xScale"
 
-const AxisBottom: FunctionComponent<{startDate: Date, endDate:Date}> = ({startDate, endDate}) => {
+const AxisBottom: FunctionComponent<{range:string[]}> = ({range}) => {
 
     const axisBottomTicks = useMemo(() => {
-        const getDateRange = getDaysArray(startDate,  endDate)
-        const xDateScale: any = xScale(getDateRange)
-        return xDateScale.domain().map((value: any) => (
-            {value, xOffset: xDateScale(value) + margin.left}))
-    },[startDate, endDate])
+        const xScaleWithRange: any = xScale(range)
+        return xScaleWithRange.domain().map((value: any) => (
+            {value, xOffset: xScaleWithRange(value) + margin.left}))
+    },[range])
 
     return (
-        <g transform={`translate(${margin.left},${height - margin.bottom})`} opacity="0.5" fill="none" fontSize="10" fontFamily="sans-serif" textAnchor="middle">
+        <g transform={`translate(${margin.left},${height - margin.bottom})`} opacity="0.5"
+           fill="none" fontSize="10" fontFamily="sans-serif" textAnchor="middle">
             <path className="domain" stroke="currentColor" d="M0.5,6V0.5H700.5V6"/>
-            {axisBottomTicks.map((item: any) => (
+            {axisBottomTicks.map((item: {[key: string]: string;}) => (
                 <g
                     className="tick"
                     opacity="1"
