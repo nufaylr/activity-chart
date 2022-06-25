@@ -1,17 +1,19 @@
 import {FunctionComponent, useMemo} from "react"
-import {height, margin} from "./settings"
-import xScale from "./xScale"
+import usePosition from "./usePosition"
+import {useActivityChart} from "./ActivityChart";
 
-const AxisBottom: FunctionComponent<{range:string[]}> = ({range}) => {
+const AxisBottom: FunctionComponent = () => {
+
+    const {xScale} = usePosition()
+    const {height, margin} = useActivityChart()
 
     const axisBottomTicks = useMemo(() => {
-        const xScaleWithRange: any = xScale(range)
-        return xScaleWithRange.domain().map((value: any) => (
-            {value, xOffset: xScaleWithRange(value) + margin.left}))
-    },[range])
+        return xScale.domain().map((value: any) => (
+            {value, xOffset: xScale(value) + margin.left}))
+    },[xScale, margin])
 
     return (
-        <g transform={`translate(${margin.left},${height - margin.bottom})`} opacity="0.5"
+        <g transform={`translate(${margin.left},${Number(height) - margin.bottom})`} opacity="0.5"
            fill="none" fontSize="10" fontFamily="sans-serif" textAnchor="middle">
             <path className="domain" stroke="currentColor" d="M0.5,6V0.5H700.5V6"/>
             {axisBottomTicks.map((item: {[key: string]: string;}) => (

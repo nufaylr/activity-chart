@@ -1,15 +1,17 @@
 import {FunctionComponent, useMemo} from "react"
-import {yScale} from "./yScale";
-import {width} from "./settings";
+import usePosition from "./usePosition";
+import {useActivityChart} from "./ActivityChart"
 
 const formatScale = (date: string) => `${date}:00`
 
 const AxisLeft: FunctionComponent = () => {
+    const {yScale} = usePosition()
+    const {width} = useActivityChart()
 
     const axisLeftTicks = useMemo(() => {
         return yScale.domain().map((value: string) => (
             {value, yOffset: yScale(value)}))
-    },[])
+    },[yScale])
 
     return (
         <g transform="translate(50,0)" opacity="0.5" fill="none" fontSize="10" fontFamily="sans-serif" textAnchor="end">

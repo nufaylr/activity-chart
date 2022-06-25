@@ -1,9 +1,7 @@
 import React from 'react';
 import './App.css';
 import {scaleOrdinal} from "d3-scale";
-import {AxisLeft, AxisBottom, Square} from "./WaffleCalendarChart"
-import {height, margin} from "./WaffleCalendarChart/settings"
-import {dateRange, getXpos, getYpos, getXposWithData, getYposWithData, time24h} from "./utils"
+import { DataCell, ActivityChart} from "./ActivityChart"
 
 /*
  We can build summaries the outcome of the jobs example :
@@ -28,38 +26,18 @@ const JOBSSummary = [
 
 const mockStartDate = new Date(2022, 4, 24)
 const mockEndDate = new Date(2022, 4, 30, 23, 0, 0, 0)
-const barWidth = 80;
-const success_colour = '#319747';
-const error_colour = '#ed3939';
-const scheduled_colour = '#cccaca';
-const default_colour = '#ebeaea';
-const axisDateRange = dateRange(mockStartDate, mockEndDate)
-
 const colorScale: any = scaleOrdinal().domain(["Success", "Error", "Scheduled"])
-    .range([success_colour, error_colour, scheduled_colour])
-
-const squareItems = axisDateRange.map((axisBottomDate) => time24h.map((axisLeftTime, index) =>
-    getYpos(axisLeftTime) ? <Square key={index} x={getXpos(axisBottomDate)} y={getYpos(axisLeftTime) - 6} width={barWidth} marginLeft={margin.left} color={default_colour}/>  : null))
-
-const squareItemsWithData = JOBSSummary.map((data, index)=>
-    <rect width={barWidth+15}
-          height="16" key={index}
-          transform={`translate(${margin.left + 5},0)`}
-          x={getXposWithData(data)}
-          y={getYposWithData(data) - 6} fill={colorScale(data) } /> )
-
+    .range(['#319747', '#ed3939', '#cccaca'])
 
 function App() {
   return (
     <div className="App">
-      <svg width="100%" height={height} className="container">
-        <AxisLeft />
-        <g>
-          {squareItems}
-          {squareItemsWithData}
-        </g>
-        <AxisBottom range={axisDateRange} />
-      </svg>
+     <ActivityChart startDate={mockStartDate} endDate={mockEndDate} width='700'>
+       {
+         JOBSSummary.map((data, index)=>
+             <DataCell key={index} item={data} itemKey="startedAt" fill={colorScale(data)}/>)
+       }
+     </ActivityChart>
     </div>
   );
 }
