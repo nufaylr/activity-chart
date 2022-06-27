@@ -33,7 +33,7 @@ const ActivityChart:FunctionComponent<PropsWithChildren<ActivityChartProps>> =
 
     const contextValue = useMemo(() => {
         const yScale:any = scaleBand()
-            .domain(time24h.reverse())
+            .domain(time24h)
             .rangeRound([margin.top, Number(height) - margin.bottom])
 
             const createXScale = (domain: string[]) => {

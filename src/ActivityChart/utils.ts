@@ -2,12 +2,14 @@ import {timeDays} from "d3-time";
 import {timeFormat} from "d3-time-format";
 
 // todo: make dynamic instead static
-const time24h  =  Array(24).fill(0).map((_, i)=>{
+const time  =  Array(24).fill(0).map((_, i)=>{
     if(i < 10 ) {
         return '0' + i.toString()
     }
     return i.toString()
 })
+
+const time24h = time.reverse()
 
 const dateRange = (start: Date, end: Date): string[] => {
     const dateRange = timeDays(start, end)
