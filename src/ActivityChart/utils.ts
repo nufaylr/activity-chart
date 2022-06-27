@@ -1,4 +1,5 @@
-import * as d3 from "d3";
+import {timeDays} from "d3-time";
+import {timeFormat} from "d3-time-format";
 
 // todo: make dynamic instead static
 const time24h  =  Array(24).fill(0).map((_, i)=>{
@@ -9,8 +10,8 @@ const time24h  =  Array(24).fill(0).map((_, i)=>{
 })
 
 const dateRange = (start: Date, end: Date): string[] => {
-    const dateRange = d3.timeDays(start, end)
-    const formatDate = dateRange.map((day)=>d3.timeFormat("%d/%m/%Y")(day))
+    const dateRange = timeDays(start, end)
+    const formatDate = dateRange.map((day)=>timeFormat("%d/%m/%Y")(day))
     return formatDate
 };
 

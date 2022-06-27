@@ -35,7 +35,13 @@ function App() {
      <ActivityChart startDate={mockStartDate} endDate={mockEndDate} width='700'>
        {
          JOBSSummary.map((data, index)=>
-             <DataCell key={index} item={data} itemKey="startedAt" fill={colorScale(data)}/>)
+               <DataCell
+                   key={index}
+                   item={data}
+                   dateTime={data.startedAt}
+                   fill={colorScale(data)}
+                   onClick={(item)=>{ console.log('🌺 can trigger popup here', item) }}/>
+         )
        }
      </ActivityChart>
     </div>
